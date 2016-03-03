@@ -4,8 +4,8 @@ using System.Collections;
 public class Movement : MonoBehaviour {
 	public Rigidbody2D phys;
 	public float speed = 2.0f;
-	public float drift = 0.9f;
-	Vector3 lastDeltaPos = Vector3.zero;
+	public float speedCap = 100f;
+	//Vector3 lastDeltaPos = Vector3.zero;
 	// Use this for initialization
 	void Start () {
 		phys = GetComponent<Rigidbody2D> ();
@@ -33,23 +33,17 @@ public class Movement : MonoBehaviour {
 		if (Input.GetKey (KeyCode.DownArrow)) {
 			deltaPos += Vector3.down * speed;
 		}
-		/*
-		if (!Input.GetKey (KeyCode.DownArrow)) {
-			deltaPos = lastDeltaPos * drift;
-		}
-		if (!Input.GetKey (KeyCode.UpArrow)) {
-			deltaPos = lastDeltaPos * drift;
-		}
-		if (!Input.GetKey (KeyCode.LeftArrow)) {
-			deltaPos = lastDeltaPos * drift;
-		}
-		if (!Input.GetKey (KeyCode.RightArrow)) {
-			deltaPos = lastDeltaPos * drift;
-		}*/
-		print (deltaPos);
+
+
 		phys.AddForce (deltaPos, ForceMode2D.Force);
-		lastDeltaPos = deltaPos;
+		Vector2 velocity = phys.velocity;
+		if (velocity.magnitude >= speedCap) {
+			phys.velocity = velocity.normalized * speedCap;
+		}
 
+		if (Input.GetKey (KeyCode.R)) {
+			Application.LoadLevel(0);
+		}
 
-	}	
+	}
 }
