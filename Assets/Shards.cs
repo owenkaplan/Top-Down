@@ -4,9 +4,9 @@ using System.Collections;
 public class Shards : MonoBehaviour {
 	public GameObject shard;
 	public int ShardNum = 4;
-	void OnCollisionEnter2D(Collision2D coll) {
+	void OnCollisionEnter2D(Collision2D Player) {
 		Player player; 
-		player = coll.gameObject.GetComponent<Player> ();
+		player = Player.gameObject.GetComponent<Player> ();
 		if (player != null) {
 			GoBoom (player);
 		}
@@ -23,7 +23,3 @@ public class Shards : MonoBehaviour {
 		}
 	}
 }
-
-
-
-//Add magnitism towards player for small shards
